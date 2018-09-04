@@ -25,7 +25,7 @@ if [ $status -ne 0 ]; then
 fi
 
 # Podlaczenie do domeny:
-domainjoin-cli join --disable ssh adm.p.lodz.pl blueocean $(cat /opt/software/Blueocean/Configs/bo_password)
+sleep 1; domainjoin-cli join --disable ssh adm.p.lodz.pl blueocean $(cat /opt/software/Blueocean/Configs/bo_password)
 
 # Start SOGE process
 source /etc/profile.d/sge.sh; /etc/init.d/sgeexecd.blueocean-v15 start
