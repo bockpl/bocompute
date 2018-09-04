@@ -1,0 +1,18 @@
+#%Module1.0                         -*-tcl-*-
+
+proc ModulesHelp { } {
+    puts stderr "\tSets up the Grid Engine batch system"
+}
+
+module-whatis "Grid Engine batch system"
+
+set sge_root "/usr/local/sge"
+set sge_cell "blueocean-v15"
+set sge_arch "lx-amd64"
+
+setenv SGE_ROOT "$sge_root"
+setenv SGE_CELL "$sge_cell"
+setenv SGE_CLUSTER_NAME "blueocean-v15"
+prepend-path PATH "$sge_root/bin/$sge_arch"
+prepend-path PATH "$sge_root/bin"
+prepend-path MANPATH "$sge_root/man"
