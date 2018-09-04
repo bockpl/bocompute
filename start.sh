@@ -1,10 +1,10 @@
 #!/bin/bash
-mfsmount -S /blueocean/opt /opt && \
-mfsmount -S /blueocean/home /home && \
-mount -o bind /usr/local/pbis /opt/pbis && \
+#mfsmount -S /blueocean/opt /opt && \
+#mfsmount -S /blueocean/home /home && \
+#mount -o bind /usr/local/pbis /opt/pbis && \
 #/opt/pbis/sbin/lwsmd --syslog& echo $! > /run/lwsmd.pid) && \
-source /etc/profile.d/sge.sh; /etc/init.d/sgeexecd.blueocean-v15 start
-/opt/pbis/sbin/lwsmd --syslog
+#source /etc/profile.d/sge.sh; /etc/init.d/sgeexecd.blueocean-v15 start
+#/opt/pbis/sbin/lwsmd --syslog
 #sleep infinity
 
 mfsmount -S /blueocean/opt /opt && \
