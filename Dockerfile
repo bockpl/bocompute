@@ -1,4 +1,4 @@
-FROM centos:7.7
+FROM centos:7
 MAINTAINER Seweryn Sitarski
 
 # Klient MFS
