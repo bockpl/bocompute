@@ -42,6 +42,12 @@ ADD soge/module.sh /etc/profile.d/
 
 RUN (chown -R sgeadmin:sgeadmin /usr/local/sge)
 
+# Wysylanie powiadomien email:
+RUN (yum -y install epel-release.noarch) && \
+(yum -y install mailx) && \
+(yum -y install msmtp) && \
+(ln -s /usr/bin/msmtp /usr/sbin/sendmail)
+
 # Proteza dla dzialania Module
 RUN (ln -s /usr/lib64/libtcl8.5.so /usr/lib64/libtcl8.6.so)
 
