@@ -64,8 +64,12 @@ RUN (yum -y install openssh-server.x86_64) && \
 (/usr/bin/ssh-keygen -A) && \
 (yum -y install openssh-clients.x86_64) && \
 (echo "Port 5001" >> /etc/ssh/ssh_config) && \
+(echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config && \
 (mkdir -p /root/.ssh)
 
+# dopoprawnego dzialania oprogramowania MPI (OpenMPI 2.1.0):
+RUN (yum -y install libibverbs.x86_64) && \
+(ln -s /usr/bin/ssh /usr/bin/rsh)
 
 
 ADD start.sh /start.sh
