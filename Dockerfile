@@ -58,8 +58,18 @@ RUN (rm -rf /tmp/*)
 RUN (rm -rf /opt/sge)
 RUN (rm -rf /opt/pbis)
 
+# Instalacja i konfiguracja serwera ssh do poprawnego dzialania MPI:
+RUN (yum -y install openssh-server.x86_64) && \
+(sed -i -- 's/#Port 22/Port 5001/g' /etc/ssh/sshd_config) && \
+(/usr/bin/ssh-keygen -A) && \
+(yum -y install openssh-clients.x86_64) && \
+(echo "Port 5001" >> /etc/ssh/ssh_config) && \
+(mkdir -p /root/.ssh)
+
+
+
 ADD start.sh /start.sh
 
-EXPOSE 6445
+EXPOSE 5001 6445
 
 CMD ["/bin/bash","-c","/start.sh"]
