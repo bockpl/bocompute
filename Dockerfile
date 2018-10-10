@@ -74,6 +74,6 @@ RUN (yum -y install libibverbs.x86_64) && \
 
 ADD start.sh /start.sh
 
-EXPOSE 5001 6445
+EXPOSE 5001 6445 49990-50000
 
 CMD ["/bin/bash","-c","/start.sh"]
