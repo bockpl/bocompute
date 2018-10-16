@@ -35,14 +35,6 @@ if [ $status -ne 0 ]; then
   exit $status
 fi
 
-# Start SSH process:
-cp /opt/software/Blueocean/Configs/ssh/id_rsa /root/.ssh/
-cp /opt/software/Blueocean/Configs/ssh/authorized_keys /root/.ssh/
-chmod 700 /root/.ssh
-chmod 600 /root/.ssh/id_rsa
-chmod 600 /root/.ssh/authorized_keys
-/usr/sbin/sshd -D &
-
 while sleep 15; do
   ps aux |grep lwsmd |grep -q -v grep
   PROCESS_1_STATUS=$?
