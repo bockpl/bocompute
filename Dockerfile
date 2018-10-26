@@ -58,6 +58,19 @@ RUN (rm -rf /tmp/*)
 RUN (rm -rf /opt/sge)
 RUN (rm -rf /opt/pbis)
 
+# Instalacja i konfiguracja serwera ssh do poprawnego dzialania MPI: 
+RUN (yum -y install openssh-server.x86_64) && \
+(/usr/bin/ssh-keygen -A) && \
+(mkdir -p /root/.ssh) && \
+(yum -y install openssh-clients.x86_64) && \
+(echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config)
+
+
+# Dopoprawnego dzialania oprogramowania MPI (OpenMPI 2.1.0): 
+RUN (yum -y install libibverbs.x86_64) && \
+(ln -s /usr/bin/ssh /usr/bin/rsh)
+
+
 ADD start.sh /start.sh
 
 EXPOSE 6445
