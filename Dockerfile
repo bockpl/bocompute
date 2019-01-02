@@ -68,6 +68,8 @@ RUN (yum -y install openssh-server.x86_64) && \
 
 # Dopoprawnego dzialania oprogramowania MPI (OpenMPI 2.1.0): 
 RUN (yum -y install libibverbs.x86_64) && \
+(yum -y install libgomp.x86_64) && \
+(yum -y install gcc.x86_64) && \
 (ln -s /usr/bin/ssh /usr/bin/rsh)
 
 
