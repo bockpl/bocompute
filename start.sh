@@ -41,7 +41,7 @@ fi
 sleep 5; domainjoin-cli join --disable ssh adm.p.lodz.pl blueocean $(cat /opt/software/Blueocean/Configs/bo_password)
 
 # Start SOGE process
-source /etc/profile.d/sge.sh; /etc/init.d/sgeexecd.blueocean-v15 start
+sleep 5; source /etc/profile.d/sge.sh; /etc/init.d/sgeexecd.blueocean-v15 start
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start SOGE sge_execd process: $status"
@@ -72,4 +72,5 @@ fi
     echo "One of the processes has already exited."
     exit 1
   fi
+
 done
