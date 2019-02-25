@@ -79,7 +79,7 @@ RUN (yum -y install libibverbs.x86_64) && \
 (yum clean all)
 
 # Instalacja sqlite do poprawnego funkcjonowania tensorboard
-RUN (yum -y install sqlite-devel.x86_64) && \
+RUN (yum -y install libsqlite3x-devel.x86_64) && \
 (yum clean all)
 
 ADD start.sh /start.sh
