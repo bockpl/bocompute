@@ -32,6 +32,7 @@ kill $(cat /run/lwsmd.pid) && \
 yum clean all && \
 rm -rf /var/cache/yum
 
+# SGE
 ADD soge/hwloc-1.5-1.el6.x86_64.rpm /tmp/hwloc-1.5-1.el6.x86_64.rpm
 ADD soge/jemalloc-3.6.0-1.el7.x86_64.rpm /tmp/jemalloc-3.6.0-1.el7.x86_64.rpm
 ADD soge/gridengine-8.1.7-1.el6.x86_64.rpm /tmp/gridengine-8.1.7-1.el6.x86_64.rpm
@@ -42,6 +43,7 @@ RUN (yum -y install /tmp/hwloc-1.5-1.el6.x86_64.rpm) && \
 (yum -y install /tmp/gridengine-8.1.7-1.el6.x86_64.rpm) && \
 (yum -y install /tmp/gridengine-execd-8.1.7-1.el6.x86_64.rpm) && \
 (cp -a /opt/sge /usr/local/) && \
+(rm -rf /tmp/*) && \
 yum clean all && \
 rm -rf /var/cache/yum
 
@@ -67,7 +69,6 @@ RUN (ln -s /usr/lib64/libtcl8.5.so /usr/lib64/libtcl8.6.so)
 
 # Do poprawnego dzialania oprogramowania Gamess (gamess_2016.R1):
 RUN (yum -y install libgfortran.x86_64) && \
-(rm -rf /tmp/*) && \
 (rm -rf /opt/sge) && \
 (rm -rf /opt/pbis) && \
 yum clean all && \
