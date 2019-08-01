@@ -1,0 +1,11 @@
+---
+- name: "Instlacja srodowiska oprogramowania Ansys 19.2"
+  hosts: "{{ var_host | default('blueocean') }}"
+  tasks:
+    - name: "Instalacja zalenosci dla oprogramowania Ansys 19.2" 
+      yum:
+        name: 
+          - mesa-libGLU.x86_64 
+          - motif.x86_64
+        state: present
+        update_cache: yes

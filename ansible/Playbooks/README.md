@@ -1,0 +1,3 @@
+# Playbooks
+
+Pliki konfiguracyjne *.yml

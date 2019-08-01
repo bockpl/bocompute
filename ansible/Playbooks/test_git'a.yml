@@ -1,0 +1,8 @@
+---
+
+- name: "Aktualizacja systemu"
+  tasks:
+    - name: "Aktualizacja repozytoriow"
+      yum:
+        name: "itp.:)"
+

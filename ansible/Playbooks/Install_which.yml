@@ -1,0 +1,9 @@
+---
+
+- name: "Instalacja oprgramowania witch z repo"
+  hosts: "{{ var_host | default('blueocean') }}"
+  tasks:
+    - name: "Instalacja" 
+      yum:
+        name: which
+        state: present

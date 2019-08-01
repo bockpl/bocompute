@@ -1,6 +1,11 @@
 FROM centos:7
 MAINTAINER Seweryn Sitarski
 
+# Dodanie do yum opcji kasowania zaleznosci wraz z kasowaniem pakietu
+RUN yum -y install yum-plugin-remove-with-leaves && \
+    yum clean all && \
+    rm -rf /var/cache/yum
+
 # Klient MFS
 RUN curl "http://ppa.moosefs.com/RPM-GPG-KEY-MooseFS" > /etc/pki/rpm-gpg/RPM-GPG-KEY-MooseFS && \
 curl "http://ppa.moosefs.com/MooseFS-3-el7.repo" > /etc/yum.repos.d/MooseFS.repo && \
@@ -81,6 +86,16 @@ RUN (yum -y install libibverbs.x86_64) && \
 # Instalacja sqlite do poprawnego funkcjonowania tensorboard
 RUN (yum -y install libsqlite3x-devel.x86_64) && \
 (yum clean all)
+
+# Dodanie i uruchomienie scenariuszy ansible
+ADD ansible /ansible
+
+RUN (yum -y install ansible) && \
+    (ansible-playbook /ansible/Playbooks/Install_all.yml --connection=local --extra-vars "var_host=127.0.0.1") && \
+    (yum -y remove ansible --remove-leaves) && \
+    (rm -rf /ansible) && \
+    (yum clean all) && \
+    (rm -rf /var/cache/yum)
 
 ADD start.sh /start.sh
 
