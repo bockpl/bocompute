@@ -19,29 +19,6 @@ rm -rf /var/cache/yum
 #mfsmount -S /blueocean/opt /opt
 #mount -o bind /usr/local/pbis /opt/pbis
 
-# AD PBIS
-# UWAGA! Pakiet jest skompilowany na sztywno ze ściekami dostępu i zawartymi bibliotekami.
-# W celu nie wchodzenia w kolizję z montowanym katalogiem /opt po instalacji calosc jest 
-# przeniesiona do /usr/local i utworzony jest link symboliczny w /opt.
-# W montowanym katalopu /opt musi równie istnieć link symboliczny do katalogu /usr/local/pbis
-RUN yum -y install wget && \
-wget -O /etc/yum.repos.d/pbiso.repo http://repo.pbis.beyondtrust.com/yum/pbiso.repo && \
-yum -y remove wget --remove-leaves && \
-yum -y install pbis-open && \
-mv /opt/pbis /usr/local && \
-ln -s /usr/local/pbis /opt/pbis && \
-(/opt/pbis/sbin/lwsmd --syslog& echo $! > /run/lwsmd.pid) && \
-(echo "set_value [HKEY_THIS_MACHINE\Services\lsass\Parameters\Providers\ActiveDirectory\] \"AssumeDefaultDomain\" 0x00000001" > modreg.txt) && \
-(echo "set_value [HKEY_THIS_MACHINE\Services\lsass\Parameters\Providers\ActiveDirectory\] \"HomeDirTemplate\" %H/likewise-open/%D/%U" >> modreg.txt) && \
-(echo "set_value [HKEY_THIS_MACHINE\Services\lsass\Parameters\Providers\Local\] \"HomeDirTemplate\" %H/likewise-open/%D/%U" >> modreg.txt) && \
-(echo "set_value [HKEY_THIS_MACHINE\Services\lsass\Parameters\RPCServers\samr\] \"HomeDirTemplate\" %H/likewise-open/%D/%U" >> modreg.txt) && \
-(sleep 1; /opt/pbis/bin/regshell -f modreg.txt) && \
-rm -f modreg.txt && \
-rm -f /opt/pbis && \
-kill $(cat /run/lwsmd.pid) && \
-yum clean all && \
-rm -rf /var/cache/yum
-
 # SGE
 ADD soge/blueocean-v15 /usr/local/sge/blueocean-v15
 ADD soge/sgeexecd.blueocean-v15 /etc/init.d/
@@ -57,6 +34,7 @@ ADD soge/gridengine-execd-8.1.7-1.el6.x86_64.rpm /tmp/gridengine-execd-8.1.7-1.e
 ADD ansible /ansible
 
 RUN yum -y install ansible && \
+    ansible-playbook /ansible/Playbooks/install_PBIS.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
     ansible-playbook /ansible/Playbooks/install_SGE.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
     ansible-playbook /ansible/Playbooks/Install_all.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
     yum -y remove ansible --remove-leaves && \

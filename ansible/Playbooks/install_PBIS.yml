@@ -1,0 +1,47 @@
+---
+# UWAGA! Pakiet jest skompilowany na sztywno ze ściekami dostępu i zawartymi bibliotekami.
+# W celu nie wchodzenia w kolizję z montowanym katalogiem /opt po instalacji calosc jest 
+# przeniesiona do /usr/local i utworzony jest link symboliczny w /opt.
+# W montowanym katalopu /opt musi równie istnieć link symboliczny do katalogu /usr/local/pbis
+- name: "Instlacja systemu autoryzacji AD PBIS"
+  hosts: "{{ var_host | default('blueocean') }}"
+  tasks:
+    #- name: "Instalacja wget"
+    #  yum:
+    #    name: wget
+    #  state: present
+    #  update_cache: yes
+    - name: "Sciaganie pbiso.repo"
+      #shell: wget -O /etc/yum.repos.d/pbiso.repo http://repo.pbis.beyondtrust.com/yum/pbiso.repo
+      get_url:
+        url: http://repo.pbis.beyondtrust.com/yum/pbiso.repo
+        dest: /etc/yum.repos.d/pbiso.repo
+    #- name: "Kasowanie wget"
+    #  shell: yum -y remove wget --remove-leaves
+    - name: "Instalacja pakietow systemu autoryzacji AD PBIS" 
+      yum:
+        name: 
+          - pbis-open
+        state: present
+        update_cache: yes
+    - name: "Przeniesienie /opt/pbis do /usr/local"
+      shell: mv /opt/pbis /usr/local
+    - name: "Tworzenie linku /opt/pbis do /usr/local/pbis"
+      file:
+        src: /usr/local/pbis
+        dest: /opt/pbis
+        state: link
+    - name: "Konfiguracja rejestru PBIS"
+      shell: |
+        (/opt/pbis/sbin/lwsmd --syslog& echo $! > /run/lwsmd.pid) && \
+        (echo "set_value [HKEY_THIS_MACHINE\Services\lsass\Parameters\Providers\ActiveDirectory\] \"AssumeDefaultDomain\" 0x00000001" > modreg.txt) && \
+        (echo "set_value [HKEY_THIS_MACHINE\Services\lsass\Parameters\Providers\ActiveDirectory\] \"HomeDirTemplate\" %H/likewise-open/%D/%U" >> modreg.txt) && \
+        (echo "set_value [HKEY_THIS_MACHINE\Services\lsass\Parameters\Providers\Local\] \"HomeDirTemplate\" %H/likewise-open/%D/%U" >> modreg.txt) && \
+        (echo "set_value [HKEY_THIS_MACHINE\Services\lsass\Parameters\RPCServers\samr\] \"HomeDirTemplate\" %H/likewise-open/%D/%U" >> modreg.txt) && \
+        (sleep 1; /opt/pbis/bin/regshell -f modreg.txt) && \
+        rm -f modreg.txt && \
+        kill $(cat /run/lwsmd.pid)
+    - name: "Kasowanie /opt/pbis, docelowo bedzie na montowanym /opt"
+      file:
+        path: /opt/pbis
+        state: absent
