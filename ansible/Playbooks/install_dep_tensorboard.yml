@@ -1,0 +1,10 @@
+---
+- name: "Instlacja srodowiska oprogramowania Tensorboard"
+  hosts: "{{ var_host | default('blueocean') }}"
+  tasks:
+    - name: "Instalacja zalenosci dla Tensorboard" 
+      yum:
+        name: 
+          - libsqlite3x-devel.x86_64
+        state: present
+        update_cache: yes

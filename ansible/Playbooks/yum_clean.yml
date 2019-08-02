@@ -1,0 +1,14 @@
+---
+- name: "Czyszczenie chche yum-a"
+  hosts: "{{ var_host | default('blueocean') }}"
+  tasks:
+# Zgodnie z dokumentacja https://docs.ansible.com/ansible/latest/modules/yum_module.html nie ma innego sposobu czyszczenia
+# Modul yum nie obsluguje opcji czyszczenia
+    - name: "Czyszczenie YUM-em" 
+      shell: yum clean all
+      args:
+        warn: false
+    - name: "Czyszczenie katalogu /var/chache/yum"
+      file: 
+        path: /var/cache/yum
+        state: absent

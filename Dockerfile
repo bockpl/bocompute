@@ -97,20 +97,13 @@ ln -s /usr/bin/ssh /usr/bin/rsh && \
 yum clean all && \
 rm -rf /var/cache/yum
 
-# Instalacja sqlite do poprawnego funkcjonowania tensorboard
-RUN yum -y install libsqlite3x-devel.x86_64 && \
-yum clean all && \
-rm -rf /var/cache/yum
-
 # Dodanie i uruchomienie scenariuszy ansible
 ADD ansible /ansible
 
-RUN (yum -y install ansible) && \
-    (ansible-playbook /ansible/Playbooks/Install_all.yml --connection=local --extra-vars "var_host=127.0.0.1") && \
-    (yum -y remove ansible --remove-leaves) && \
-    (rm -rf /ansible) && \
-    yum clean all && \
-    rm -rf /var/cache/yum
+RUN yum -y install ansible && \
+    ansible-playbook /ansible/Playbooks/Install_all.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
+    yum -y remove ansible --remove-leaves && \
+    rm -rf /ansible
 
 ADD start.sh /start.sh
 
