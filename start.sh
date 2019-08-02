@@ -50,19 +50,16 @@ fi
 
 while sleep 15; do
 
-# Sprwdzenie aktualnej wersji pliku hosts 
-LOCAL_HOSTS_PATH="/etc/hosts"
-MFS_HOSTS_PATH="/opt/software/Blueocean/Configs/docker_hosts/hosts"
-LOCAL_HOSTS_MD5=$(md5sum $LOCAL_HOSTS_PATH|awk '{print $1}')
-MFS_HOSTS_MD5=$(md5sum $MFS_HOSTS_PATH |awk '{print $1}')
+  # Sprwdzenie aktualnej wersji pliku hosts 
+  LOCAL_HOSTS_PATH="/etc/hosts"
+  MFS_HOSTS_PATH="/opt/software/Blueocean/Configs/docker_hosts/hosts"
+  LOCAL_HOSTS_MD5=$(md5sum $LOCAL_HOSTS_PATH|awk '{print $1}')
+  MFS_HOSTS_MD5=$(md5sum $MFS_HOSTS_PATH |awk '{print $1}')
 
-if [ $LOCAL_HOSTS_MD5 == $MFS_HOSTS_MD5 ] 
-	then
-		echo "Plik hosts z centralnego repozytorium jest spojny z plikiem lokalnym"
-	else
-		echo "Plik hosts sa rozne, konieczna aktualizacja na lokalnym hoscie"
-		cp -a $MFS_HOSTS_PATH $LOCAL_HOSTS_PATH
-fi
+  if [ $LOCAL_HOSTS_MD5 != $MFS_HOSTS_MD5 ]; then
+      echo -n "Plik hosts sa rozne, konieczna aktualizacja na lokalnym hoscie..."
+      cp -a $MFS_HOSTS_PATH $LOCAL_HOSTS_PATH && echo "Poprawione!"
+  fi
 
   ps aux |grep lwsmd |grep -q -v grep
   PROCESS_1_STATUS=$?
