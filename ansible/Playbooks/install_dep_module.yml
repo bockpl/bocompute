@@ -1,0 +1,10 @@
+---
+
+- name: "Instalacja srodowiska oprgramowania Module"
+  hosts: "{{ var_host | default('blueocean') }}"
+  tasks:
+    - name: "Link (proteza) dla dzialania Module" 
+      file:
+        src: /usr/lib64/libtcl8.5.so
+        dest: /usr/lib64/libtcl8.6.so
+        state: link

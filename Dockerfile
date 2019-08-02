@@ -72,9 +72,6 @@ yum clean all && \
 rm -rf /var/cache/yum && \
 ln -s /usr/bin/msmtp /usr/sbin/sendmail
 
-# Proteza dla dzialania Module
-RUN ln -s /usr/lib64/libtcl8.5.so /usr/lib64/libtcl8.6.so
-
 # Dodanie i uruchomienie scenariuszy ansible
 ADD ansible /ansible
 
