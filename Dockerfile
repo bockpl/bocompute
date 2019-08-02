@@ -18,16 +18,24 @@ rm -rf /var/cache/yum
 #mount -o bind /usr/local/pbis /opt/pbis
 
 # AD PBIS
+# UWAGA! Pakiet jest skompilowany na sztywno ze ściekami dostępu i zawartymi bibliotekami.
+# W celu nie wchodzenia w kolizję z montowanym katalogiem /opt po instalacji calosc jest 
+# przeniesiona do /usr/local i utworzony jest link symboliczny w /opt.
+# W montowanym katalopu /opt musi równie istnieć link symboliczny do katalogu /usr/local/pbis
 RUN yum -y install wget && \
 wget -O /etc/yum.repos.d/pbiso.repo http://repo.pbis.beyondtrust.com/yum/pbiso.repo && \
+yum -y remove wget --remove-leaves && \
 yum -y install pbis-open && \
-cp -a /opt/pbis /usr/local && \
+mv /opt/pbis /usr/local && \
+ln -s /usr/local/pbis /opt/pbis && \
 (/opt/pbis/sbin/lwsmd --syslog& echo $! > /run/lwsmd.pid) && \
 (echo "set_value [HKEY_THIS_MACHINE\Services\lsass\Parameters\Providers\ActiveDirectory\] \"AssumeDefaultDomain\" 0x00000001" > modreg.txt) && \
 (echo "set_value [HKEY_THIS_MACHINE\Services\lsass\Parameters\Providers\ActiveDirectory\] \"HomeDirTemplate\" %H/likewise-open/%D/%U" >> modreg.txt) && \
 (echo "set_value [HKEY_THIS_MACHINE\Services\lsass\Parameters\Providers\Local\] \"HomeDirTemplate\" %H/likewise-open/%D/%U" >> modreg.txt) && \
 (echo "set_value [HKEY_THIS_MACHINE\Services\lsass\Parameters\RPCServers\samr\] \"HomeDirTemplate\" %H/likewise-open/%D/%U" >> modreg.txt) && \
 (sleep 1; /opt/pbis/bin/regshell -f modreg.txt) && \
+rm -f modreg.txt && \
+rm -f /opt/pbis && \
 kill $(cat /run/lwsmd.pid) && \
 yum clean all && \
 rm -rf /var/cache/yum
@@ -70,7 +78,6 @@ RUN (ln -s /usr/lib64/libtcl8.5.so /usr/lib64/libtcl8.6.so)
 # Do poprawnego dzialania oprogramowania Gamess (gamess_2016.R1):
 RUN (yum -y install libgfortran.x86_64) && \
 (rm -rf /opt/sge) && \
-(rm -rf /opt/pbis) && \
 yum clean all && \
 rm -rf /var/cache/yum
 
