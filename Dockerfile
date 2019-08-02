@@ -80,23 +80,6 @@ RUN yum -y install libgfortran.x86_64 && \
 yum clean all && \
 rm -rf /var/cache/yum
 
-# Instalacja i konfiguracja serwera ssh do poprawnego dzialania MPI: 
-RUN yum -y install openssh-server.x86_64 && \
-/usr/bin/ssh-keygen -A && \
-mkdir -p /root/.ssh && \
-yum -y install openssh-clients.x86_64 && \
-echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config && \
-yum clean all && \
-rm -rf /var/cache/yum
-
-# Dopoprawnego dzialania oprogramowania MPI (OpenMPI 2.1.0): 
-RUN yum -y install libibverbs.x86_64 && \
-yum -y install libgomp.x86_64 && \
-yum -y install gcc.x86_64 && \
-ln -s /usr/bin/ssh /usr/bin/rsh && \
-yum clean all && \
-rm -rf /var/cache/yum
-
 # Dodanie i uruchomienie scenariuszy ansible
 ADD ansible /ansible
 

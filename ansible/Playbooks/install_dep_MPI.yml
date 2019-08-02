@@ -1,0 +1,28 @@
+---
+- name: "Instlacja srodowiska oprogramowania MPI (OpenMPI 2.1.0)"
+  hosts: "{{ var_host | default('blueocean') }}"
+  tasks:
+    - name: "Instalacja zalenosci dla oprogramowania MPI (OpenMPI 2.1.0)" 
+      yum:
+        name: 
+          - libibverbs.x86_64
+          - libgomp.x86_64
+          - gcc.x86_64
+          - openssh-server.x86_64
+          - openssh-clients.x86_64
+        state: present
+        update_cache: yes
+    - name: "Tworzenie linku rsh do ssh"
+      file:
+        src: /usr/bin/ssh
+        dest: /usr/bin/rsh
+        state: link
+    - name: "Generacja kluczy SSH" 
+      shell: /usr/bin/ssh-keygen -A
+    - name: "Tworzenie katalogu konfiguracji klienta SSH"
+      file:
+        path: /root/.ssh
+        state: directory
+        mode: '0700'
+    - name: "Konfiguracja klienta SSH" 
+      shell: echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
