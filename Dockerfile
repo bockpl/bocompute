@@ -53,21 +53,11 @@ ADD soge/jemalloc-3.6.0-1.el7.x86_64.rpm /tmp/jemalloc-3.6.0-1.el7.x86_64.rpm
 ADD soge/gridengine-8.1.7-1.el6.x86_64.rpm /tmp/gridengine-8.1.7-1.el6.x86_64.rpm
 ADD soge/gridengine-execd-8.1.7-1.el6.x86_64.rpm /tmp/gridengine-execd-8.1.7-1.el6.x86_64.rpm
 
-RUN yum -y install /tmp/hwloc-1.5-1.el6.x86_64.rpm && \
-yum -y install /tmp/jemalloc-3.6.0-1.el7.x86_64.rpm && \
-yum -y install /tmp/gridengine-8.1.7-1.el6.x86_64.rpm && \
-yum -y install /tmp/gridengine-execd-8.1.7-1.el6.x86_64.rpm && \
-cp -a /opt/sge/* /usr/local/sge/ && \
-rm -rf /opt/sge && \
-chown -R sgeadmin:sgeadmin /usr/local/sge && \
-rm -f /tmp/*.rpm && \
-yum clean all && \
-rm -rf /var/cache/yum
-
 # Dodanie i uruchomienie scenariuszy ansible
 ADD ansible /ansible
 
 RUN yum -y install ansible && \
+    ansible-playbook /ansible/Playbooks/install_SGE.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
     ansible-playbook /ansible/Playbooks/Install_all.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
     yum -y remove ansible --remove-leaves && \
     rm -rf /ansible
