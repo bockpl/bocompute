@@ -8,14 +8,6 @@ RUN yum -y install yum-plugin-remove-with-leaves && \
     yum clean all && \
     rm -rf /var/cache/yum
 
-# Klient MFS
-RUN curl "http://ppa.moosefs.com/RPM-GPG-KEY-MooseFS" > /etc/pki/rpm-gpg/RPM-GPG-KEY-MooseFS && \
-curl "http://ppa.moosefs.com/MooseFS-3-el7.repo" > /etc/yum.repos.d/MooseFS.repo && \
-sed -i -- 's/moosefs-3/3.0.100/g' /etc/yum.repos.d/MooseFS.repo && \
-yum -y install moosefs-pro-client && \
-yum clean all && \
-rm -rf /var/cache/yum
-
 #mfsmount -S /blueocean/opt /opt
 #mount -o bind /usr/local/pbis /opt/pbis
 
