@@ -1,0 +1,22 @@
+---
+- name: "Instalacja srodowiska obslugi poczty"
+  hosts: "{{ var_host | default('blueocean') }}"
+  tasks:
+    - name: "Dodatkowe repozytorium EPEL" 
+      yum:
+        name: 
+          - epel-release.noarch
+        state: present
+        update_cache: yes
+    - name: "Instalacja pakietow obslugi poczty" 
+      yum:
+        name: 
+          - mailx
+          - msmtp
+        state: present
+        update_cache: yes
+    - name: "Link sendmail -> msmtp" 
+      file:
+        src: /usr/bin/msmtp
+        dest: /usr/sbin/sendmail
+        state: link

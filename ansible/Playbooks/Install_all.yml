@@ -1,9 +1,10 @@
 ---
-- include: Install_which.yml
-- include: Install_dep_Augustus.yml
-- include: Install_dep_Ansys19.2.yml
-- include: install_dep_module.yml
-- include: install_dep_games.yml
-- include: install_dep_MPI.yml
-- include: install_dep_tensorboard.yml
-- include: yum_clean.yml
+- import_playbook: Install_which.yml
+- import_playbook: Install_dep_Augustus.yml
+- import_playbook: Install_dep_Ansys19.2.yml
+- import_playbook: install_mail_support.yml
+- import_playbook: install_dep_module.yml
+- import_playbook: install_dep_games.yml
+- import_playbook: install_dep_MPI.yml
+- import_playbook: install_dep_tensorboard.yml
+- import_playbook: yum_clean.yml

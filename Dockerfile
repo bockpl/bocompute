@@ -64,14 +64,6 @@ rm -f /tmp/*.rpm && \
 yum clean all && \
 rm -rf /var/cache/yum
 
-# Wysylanie powiadomien email:
-RUN yum -y install epel-release.noarch && \
-yum -y install mailx && \
-yum -y install msmtp && \
-yum clean all && \
-rm -rf /var/cache/yum && \
-ln -s /usr/bin/msmtp /usr/sbin/sendmail
-
 # Dodanie i uruchomienie scenariuszy ansible
 ADD ansible /ansible
 
