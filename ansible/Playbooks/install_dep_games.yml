@@ -1,0 +1,10 @@
+---
+
+- name: "Instalacja srodowiska oprgramowania Games"
+  hosts: "{{ var_host | default('blueocean') }}"
+  tasks:
+    - name: "Instalacja zalenosci dla oprogramowania Games" 
+      yum:
+        name: libgfortran.x86_64
+        state: present
+        update_cache: yes

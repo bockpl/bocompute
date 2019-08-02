@@ -2,6 +2,7 @@
 - include: Install_which.yml
 - include: Install_dep_Augustus.yml
 - include: Install_dep_Ansys19.2.yml
+- include: install_dep_games.yml
 - include: install_dep_MPI.yml
 - include: install_dep_tensorboard.yml
 - include: yum_clean.yml

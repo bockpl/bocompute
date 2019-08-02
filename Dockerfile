@@ -75,11 +75,6 @@ ln -s /usr/bin/msmtp /usr/sbin/sendmail
 # Proteza dla dzialania Module
 RUN ln -s /usr/lib64/libtcl8.5.so /usr/lib64/libtcl8.6.so
 
-# Do poprawnego dzialania oprogramowania Gamess (gamess_2016.R1):
-RUN yum -y install libgfortran.x86_64 && \
-yum clean all && \
-rm -rf /var/cache/yum
-
 # Dodanie i uruchomienie scenariuszy ansible
 ADD ansible /ansible
 
