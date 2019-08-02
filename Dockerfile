@@ -1,5 +1,7 @@
 FROM centos:7
-MAINTAINER Seweryn Sitarski
+LABEL maintainer="seweryn.sitarski@p.lodz.pl"
+
+EXPOSE 6445
 
 # Dodanie do yum opcji kasowania zaleznosci wraz z kasowaniem pakietu
 RUN yum -y install yum-plugin-remove-with-leaves && \
@@ -41,65 +43,62 @@ yum clean all && \
 rm -rf /var/cache/yum
 
 # SGE
-ADD soge/hwloc-1.5-1.el6.x86_64.rpm /tmp/hwloc-1.5-1.el6.x86_64.rpm
-ADD soge/jemalloc-3.6.0-1.el7.x86_64.rpm /tmp/jemalloc-3.6.0-1.el7.x86_64.rpm
-ADD soge/gridengine-8.1.7-1.el6.x86_64.rpm /tmp/gridengine-8.1.7-1.el6.x86_64.rpm
-ADD soge/gridengine-execd-8.1.7-1.el6.x86_64.rpm /tmp/gridengine-execd-8.1.7-1.el6.x86_64.rpm
-
-RUN (yum -y install /tmp/hwloc-1.5-1.el6.x86_64.rpm) && \
-(yum -y install /tmp/jemalloc-3.6.0-1.el7.x86_64.rpm) && \
-(yum -y install /tmp/gridengine-8.1.7-1.el6.x86_64.rpm) && \
-(yum -y install /tmp/gridengine-execd-8.1.7-1.el6.x86_64.rpm) && \
-(cp -a /opt/sge /usr/local/) && \
-(rm -rf /tmp/*) && \
-yum clean all && \
-rm -rf /var/cache/yum
-
-
 ADD soge/blueocean-v15 /usr/local/sge/blueocean-v15
 ADD soge/sgeexecd.blueocean-v15 /etc/init.d/
 ADD soge/sge.sh /etc/profile.d/
 ADD soge/module.sh /etc/profile.d/
 
-RUN (chown -R sgeadmin:sgeadmin /usr/local/sge) 
+ADD soge/hwloc-1.5-1.el6.x86_64.rpm /tmp/hwloc-1.5-1.el6.x86_64.rpm
+ADD soge/jemalloc-3.6.0-1.el7.x86_64.rpm /tmp/jemalloc-3.6.0-1.el7.x86_64.rpm
+ADD soge/gridengine-8.1.7-1.el6.x86_64.rpm /tmp/gridengine-8.1.7-1.el6.x86_64.rpm
+ADD soge/gridengine-execd-8.1.7-1.el6.x86_64.rpm /tmp/gridengine-execd-8.1.7-1.el6.x86_64.rpm
 
+RUN yum -y install /tmp/hwloc-1.5-1.el6.x86_64.rpm && \
+yum -y install /tmp/jemalloc-3.6.0-1.el7.x86_64.rpm && \
+yum -y install /tmp/gridengine-8.1.7-1.el6.x86_64.rpm && \
+yum -y install /tmp/gridengine-execd-8.1.7-1.el6.x86_64.rpm && \
+cp -a /opt/sge/* /usr/local/sge/ && \
+rm -rf /opt/sge && \
+chown -R sgeadmin:sgeadmin /usr/local/sge && \
+rm -f /tmp/*.rpm && \
+yum clean all && \
+rm -rf /var/cache/yum
 
 # Wysylanie powiadomien email:
-RUN (yum -y install epel-release.noarch) && \
-(yum -y install mailx) && \
-(yum -y install msmtp) && \
+RUN yum -y install epel-release.noarch && \
+yum -y install mailx && \
+yum -y install msmtp && \
 yum clean all && \
 rm -rf /var/cache/yum && \
-(ln -s /usr/bin/msmtp /usr/sbin/sendmail)
+ln -s /usr/bin/msmtp /usr/sbin/sendmail
 
 # Proteza dla dzialania Module
-RUN (ln -s /usr/lib64/libtcl8.5.so /usr/lib64/libtcl8.6.so)
+RUN ln -s /usr/lib64/libtcl8.5.so /usr/lib64/libtcl8.6.so
 
 # Do poprawnego dzialania oprogramowania Gamess (gamess_2016.R1):
-RUN (yum -y install libgfortran.x86_64) && \
-(rm -rf /opt/sge) && \
+RUN yum -y install libgfortran.x86_64 && \
 yum clean all && \
 rm -rf /var/cache/yum
 
 # Instalacja i konfiguracja serwera ssh do poprawnego dzialania MPI: 
-RUN (yum -y install openssh-server.x86_64) && \
-(/usr/bin/ssh-keygen -A) && \
-(mkdir -p /root/.ssh) && \
-(yum -y install openssh-clients.x86_64) && \
-(echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config) && \
+RUN yum -y install openssh-server.x86_64 && \
+/usr/bin/ssh-keygen -A && \
+mkdir -p /root/.ssh && \
+yum -y install openssh-clients.x86_64 && \
+echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config && \
 yum clean all && \
 rm -rf /var/cache/yum
 
 # Dopoprawnego dzialania oprogramowania MPI (OpenMPI 2.1.0): 
-RUN (yum -y install libibverbs.x86_64) && \
-(yum -y install libgomp.x86_64) && \
-(yum -y install gcc.x86_64) && \
-(ln -s /usr/bin/ssh /usr/bin/rsh) && \
+RUN yum -y install libibverbs.x86_64 && \
+yum -y install libgomp.x86_64 && \
+yum -y install gcc.x86_64 && \
+ln -s /usr/bin/ssh /usr/bin/rsh && \
 yum clean all && \
 rm -rf /var/cache/yum
 
 # Instalacja sqlite do poprawnego funkcjonowania tensorboard
-RUN (yum -y install libsqlite3x-devel.x86_64) && \
+RUN yum -y install libsqlite3x-devel.x86_64 && \
 yum clean all && \
 rm -rf /var/cache/yum
 
@@ -114,7 +113,5 @@ RUN (yum -y install ansible) && \
     rm -rf /var/cache/yum
 
 ADD start.sh /start.sh
-
-EXPOSE 6445
 
 CMD ["/bin/bash","-c","/start.sh"]
