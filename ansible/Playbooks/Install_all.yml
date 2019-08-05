@@ -1,4 +1,5 @@
 ---
+- import_playbook: install_monit.yml
 - import_playbook: Install_which.yml
 - import_playbook: Install_dep_Augustus.yml
 - import_playbook: Install_dep_Ansys19.2.yml
@@ -8,4 +9,5 @@
 - import_playbook: install_dep_games.yml
 - import_playbook: install_dep_MPI.yml
 - import_playbook: install_dep_tensorboard.yml
+- import_playbook: install_dep_jupyterhub.yml
 - import_playbook: yum_clean.yml
