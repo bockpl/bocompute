@@ -8,4 +8,5 @@
 - import_playbook: install_dep_games.yml
 - import_playbook: install_dep_MPI.yml
 - import_playbook: install_dep_tensorboard.yml
+- import_playbook: install_dep_jupyterhub.yml
 - import_playbook: yum_clean.yml

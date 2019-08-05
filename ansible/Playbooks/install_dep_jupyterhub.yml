@@ -1,0 +1,17 @@
+---
+
+- name: "Instalacja wymagan dla jupyterhub"
+  hosts: "{{ var_host | default('blueocean') }}"
+  tasks:
+    - name: "Instalacja zalenosci dla oprogramowania jupyterhub" 
+      yum:
+        name:
+            # Brak wymagań co do konfiguracji sudo, to root korzysta z sudo by wykonac dzialania na rzecz innych uzytkownikow
+          - sudo.x86_64
+          - npm.x86_64
+        state: present
+        update_cache: yes
+    - name: Instalacja "configurable-http-proxy" globalnie.
+      npm:
+        name: configurable-http-proxy
+        global: yes
