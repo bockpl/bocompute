@@ -27,6 +27,7 @@ ADD monit/jupyterhub /etc/monit.d/
 ADD monit/start_sshd.sh /
 ADD monit/start_pbis.sh /
 ADD monit/start_sync_hosts.sh /
+ADD monit/start_jupyterhub.sh /
 
 # Dodanie i uruchomienie scenariuszy ansible
 ADD ansible /ansible
