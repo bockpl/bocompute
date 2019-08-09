@@ -1,0 +1,5 @@
+check process pbis with MATCHING .*lwsmd.*
+	group system
+	start program = "/start_pbis.sh"
+	stop  program = "/usr/bin/kill $(cat /var/run/pbis.pid)"
+

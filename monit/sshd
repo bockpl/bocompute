@@ -1,0 +1,5 @@
+check process sshd with pidfile /var/run/sshd.pid
+	group system
+	start program = "/start_sshd.sh"
+	stop program = "/usr/bin/kill $(cat /var/run/sshd.pid)"
+
