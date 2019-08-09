@@ -17,6 +17,17 @@ ADD soge/jemalloc-3.6.0-1.el7.x86_64.rpm /tmp/jemalloc-3.6.0-1.el7.x86_64.rpm
 ADD soge/gridengine-8.1.7-1.el6.x86_64.rpm /tmp/gridengine-8.1.7-1.el6.x86_64.rpm
 ADD soge/gridengine-execd-8.1.7-1.el6.x86_64.rpm /tmp/gridengine-execd-8.1.7-1.el6.x86_64.rpm
 
+# Dodanie konfiguracji monit-a
+ADD monit/monitrc /etc/
+ADD monit/sshd /etc/monit.d/
+ADD monit/pbis /etc/monit.d/
+ADD monit/sge /etc/monit.d/
+ADD monit/sync_hosts /etc/monit.d/
+ADD monit/jupyterhub /etc/monit.d/
+ADD monit/start_sshd.sh /
+ADD monit/start_pbis.sh /
+ADD monit/start_sync_hosts.sh /
+
 # Dodanie i uruchomienie scenariuszy ansible
 ADD ansible /ansible
 
