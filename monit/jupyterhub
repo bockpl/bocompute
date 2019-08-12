@@ -2,4 +2,4 @@ check process jupyterhub MATCHING .*jupyterhub.*
 	group system
 	start program = "/start_jupyterhub.sh"
 	stop  program = "/usr/bin/pkill jupyterhub"
-
+	depends on pbis, sge
