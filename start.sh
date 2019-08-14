@@ -16,7 +16,8 @@ if [ $status -ne 0 ]; then
   exit $status
 fi
 
-/start_sync_hosts.sh
+# Jednokrotna aktualizacja liku hosts przy starcie, pozniej wywolywane systematycznie przez monit-a
+/etc/monit.d/start_sync_hosts.sh
 
 MONIT_OPT=-I
 if ! [[-z "$DEBUG" ]]; then

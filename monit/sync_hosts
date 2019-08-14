@@ -1,5 +1,0 @@
-check program sync_hosts PATH /start_sync_hosts.sh every "0-15 * * * *"
-	group system
-	if status != 0 then alert
-
-
