@@ -1,7 +1,7 @@
 FROM centos:7
 LABEL maintainer="seweryn.sitarski@p.lodz.pl"
 
-EXPOSE 6445
+EXPOSE 6445/tcp 8000/tcp 8081/tcp
 
 #mfsmount -S /blueocean/opt /opt
 #mount -o bind /usr/local/pbis /opt/pbis
