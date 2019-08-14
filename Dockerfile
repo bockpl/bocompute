@@ -42,6 +42,8 @@ ADD monit/start_sync_hosts.sh /etc/monit.d/
 ENV JUPYTERHUB_WORKDIR=/var/run/jupyterhub
 ADD monit/start_jupyterhub.sh /etc/monit.d/
 
+ENV TIME_ZONE=Europe/Warsaw
+
 ADD start.sh /start.sh
 
 CMD ["/bin/bash","-c","/start.sh"]

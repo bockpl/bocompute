@@ -16,6 +16,11 @@ if [ $status -ne 0 ]; then
   exit $status
 fi
 
+# Ustawienie strefy czasowej
+if ! [[ -z "$TIME_ZONE" ]]; then
+  ln -sf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime
+fi
+
 # Jednokrotna aktualizacja liku hosts przy starcie, pozniej wywolywane systematycznie przez monit-a
 /etc/monit.d/start_sync_hosts.sh
 
