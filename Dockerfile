@@ -42,6 +42,9 @@ ADD monit/start_sync_hosts.sh /etc/monit.d/
 ENV JUPYTERHUB_WORKDIR=/var/run/jupyterhub
 ADD monit/start_jupyterhub.sh /etc/monit.d/
 
+# Zmiana uprawnien konfiguracji monit-a
+RUN chmod 700 /etc/monitrc
+
 ENV TIME_ZONE=Europe/Warsaw
 
 ADD start.sh /start.sh
