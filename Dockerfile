@@ -28,7 +28,7 @@ RUN yum -y install yum-plugin-remove-with-leaves && \
 ADD monit/monitrc /etc/
 ADD monit/sshd.conf /etc/monit.d/
 ADD monit/pbis.conf /etc/monit.d/
-ADD monit/sge.conf /etc/monit.d/
+ADD monit/sge_exec.conf /etc/monit.d/
 ADD monit/sync_hosts.conf /etc/monit.d/
 ADD monit/jupyterhub.conf /etc/monit.d/
 ADD monit/start_sshd.sh /etc/monit.d/
