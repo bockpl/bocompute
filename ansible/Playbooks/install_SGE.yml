@@ -4,28 +4,16 @@
   tasks:
     - name: "Instalacja pakietow systemu kolejkowego SGE" 
       yum:
-        name: 
-          - /tmp/hwloc-1.5-1.el6.x86_64.rpm
+        name:
+          - hwloc 
           - /tmp/jemalloc-3.6.0-1.el7.x86_64.rpm
-          - /tmp/gridengine-8.1.7-1.el6.x86_64.rpm
-          - /tmp/gridengine-execd-8.1.7-1.el6.x86_64.rpm
         state: present
         update_cache: yes
-    - name: "Kopiowanie SGE do /usr/local"
-      copy:
-        src: /opt/sge
-        dest: /usr/local/
-        mode: preserve
-    - name: "Kasowanie plikow /opt/sge/*" 
+    - name: "DO POPRAWY - Obejcie, tworzenie linku /opt/sge do /usr/local/sge"
       file:
-        path: /opt/sge
-        state: absent
+        src: /opt/sge
+        dest: /usr/local/sge
+        state: link
+        force: yes
     - name: "Kasowanie plikow rpm systemu SGE" 
       shell: rm -f /tmp/*.rpm
-    - name: "Ustawienie wlascicielstwa sgeadmin:sgeadmin dla /usr/local/sge"
-      file:
-        path: /usr/local/sge
-        owner: sgeadmin
-        group: sgeadmin
-        state: directory
-        recurse: yes

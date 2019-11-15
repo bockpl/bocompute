@@ -3,6 +3,12 @@
 - name: "Instalacja srodowiska oprgramowania Module"
   hosts: "{{ var_host | default('blueocean') }}"
   tasks:
+    - name: "Instalacja wymaganych pakietow dla Module"
+      yum:
+        name:
+          - tcl-8.5.13-8.el7.x86_64 
+        state: present
+        update_cache: yes
     - name: "Link (proteza) dla dzialania Module" 
       file:
         src: /usr/lib64/libtcl8.5.so

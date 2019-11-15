@@ -7,15 +7,11 @@ EXPOSE 6445/tcp 8000/tcp 8081/tcp
 #mount -o bind /usr/local/pbis /opt/pbis
 
 # SGE
-ADD soge/blueocean-v15 /usr/local/sge/blueocean-v15
 ADD soge/sgeexecd.blueocean-v15 /etc/init.d/
 ADD soge/sge.sh /etc/profile.d/
 ADD soge/module.sh /etc/profile.d/
 
-ADD soge/hwloc-1.5-1.el6.x86_64.rpm /tmp/hwloc-1.5-1.el6.x86_64.rpm
 ADD soge/jemalloc-3.6.0-1.el7.x86_64.rpm /tmp/jemalloc-3.6.0-1.el7.x86_64.rpm
-ADD soge/gridengine-8.1.7-1.el6.x86_64.rpm /tmp/gridengine-8.1.7-1.el6.x86_64.rpm
-ADD soge/gridengine-execd-8.1.7-1.el6.x86_64.rpm /tmp/gridengine-execd-8.1.7-1.el6.x86_64.rpm
 
 # Dodanie i uruchomienie scenariuszy ansible, tymczasowo tylko na czas budowy
 ADD ansible /ansible
