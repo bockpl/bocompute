@@ -3,8 +3,13 @@
 - name: "Instalacja srodowiska oprgramowania Games"
   hosts: "{{ var_host | default('blueocean') }}"
   tasks:
+    - name: "Instalacja tcsh"
+      yum:
+        name: tcsh
+        state: present
+        update_cache: yes
     - name: "Instalacja zalenosci dla oprogramowania Games" 
       yum:
         name: libgfortran.x86_64
         state: present
-        update_cache: yes
+        update_cache: no
