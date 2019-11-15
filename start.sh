@@ -25,7 +25,7 @@ fi
 /etc/monit.d/start_sync_hosts.sh
 
 MONIT_OPT=-I
-if ! [[-z "$DEBUG" ]]; then
+if ! [[ -z "$DEBUG" ]]; then
   MONIT_OPT="$MONIT_OPT -vvv"  
 fi
 monit $MONIT_OPT
