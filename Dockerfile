@@ -19,7 +19,7 @@ ADD ansible /ansible
 RUN yum -y install yum-plugin-remove-with-leaves && \
     yum -y install ansible && \
     ansible-playbook /ansible/Playbooks/install_PBIS.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
-    ansible-playbook /ansible/Playbooks/install_SGE.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
+    ansible-playbook /ansible/Playbooks/install_dep_soge.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
     ansible-playbook /ansible/Playbooks/Install_all.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
     yum -y remove ansible --remove-leaves && \
     rm -rf /ansible
