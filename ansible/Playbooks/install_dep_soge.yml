@@ -15,5 +15,7 @@
         dest: /usr/local/sge
         state: link
         force: yes
+    - name: "Zakladanie uzytkownika sgeadmin"
+      shell: groupadd -g 998 -r sgeadmin && useradd -c "SOGE admin user" -g 998 -u 999 sgeadmin -r
     - name: "Kasowanie plikow rpm systemu SGE" 
       shell: rm -f /tmp/*.rpm
