@@ -30,7 +30,6 @@ ADD monit/sshd.conf /etc/monit.d/
 ADD monit/pbis.conf /etc/monit.d/
 ADD monit/sge_exec.conf /etc/monit.d/
 ADD monit/sync_hosts.conf /etc/monit.d/
-ADD monit/jupyterhub.conf /etc/monit.d/
 ADD monit/start_sshd.sh /etc/monit.d/
 ADD monit/start_pbis.sh /etc/monit.d/
 ADD monit/start_sync_hosts.sh /etc/monit.d/
