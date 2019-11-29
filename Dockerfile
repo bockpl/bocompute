@@ -34,9 +34,6 @@ ADD monit/start_sshd.sh /etc/monit.d/
 ADD monit/start_pbis.sh /etc/monit.d/
 ADD monit/start_sync_hosts.sh /etc/monit.d/
 
-ENV JUPYTERHUB_WORKDIR=/var/run/jupyterhub
-ADD monit/start_jupyterhub.sh /etc/monit.d/
-
 # Zmiana uprawnien konfiguracji monit-a
 RUN chmod 700 /etc/monitrc
 
