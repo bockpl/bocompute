@@ -26,11 +26,11 @@ ansible-playbook Playbooks/install_PBIS.yml --connection=local --extra-vars "var
 # Instalacja wymagan dla systemu kolejkowego SOGE    
 ansible-playbook Playbooks/install_dep_SOGE.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
 # Instalacja obslugi e-mail
-ansible-playbook Playbooks/install_mail_support.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
+ansible-playbook Playbooks/install_Mail_support.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
 # Instalacja systemu Monit
-ansible-playbook Playbooks/install_monit.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
+ansible-playbook Playbooks/install_Monit.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
 # Instalacja wymagan dla podsystemu Module
-ansible-playbook Playbooks/install_dep_module.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
+ansible-playbook Playbooks/install_dep_Module.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
 # Instalacja wymagan dla oprogramowania Augustus
 ansible-playbook Playbooks/install_dep_Augustus.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
 # Instalacja wymagan dla oprogramownia Ansys v19.2
