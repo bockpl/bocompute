@@ -65,6 +65,7 @@ ADD monit/start_sync_hosts.sh /etc/monit.d/
 RUN chmod 700 /etc/monitrc
 
 ENV TIME_ZONE=Europe/Warsaw
+ENV LANG=en_US.UTF-8
 
 ADD start.sh /start.sh
 
