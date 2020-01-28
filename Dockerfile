@@ -1,17 +1,12 @@
 FROM centos:7
 LABEL maintainer="seweryn.sitarski@p.lodz.pl"
 
-EXPOSE 6445/tcp
-
 # SGE
 ADD soge/sgeexecd.blueocean-v15 /etc/init.d/
 ADD soge/sge.sh /etc/profile.d/
 ADD soge/module.sh /etc/profile.d/
 
 ADD soge/jemalloc-3.6.0-1.el7.x86_64.rpm /tmp/jemalloc-3.6.0-1.el7.x86_64.rpm
-
-# Dodanie i uruchomienie scenariuszy ansible, tymczasowo tylko na czas budowy
-#ADD ansible /ansible
 
 RUN \
 # Tymczasowa instalacja git-a i ansible w celu uruchomienia playbook-ow
@@ -67,6 +62,6 @@ RUN chmod 700 /etc/monitrc
 ENV TIME_ZONE=Europe/Warsaw
 ENV LANG=en_US.UTF-8
 
-ADD start.sh /start.sh
+ADD start.sh /usr/local/bin/start.sh
 
-CMD ["/bin/bash","-c","/start.sh"]
+CMD ["/bin/bash","-c","/usr/local/bin/start.sh"]
