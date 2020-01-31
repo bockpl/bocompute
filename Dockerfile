@@ -8,6 +8,8 @@ ADD soge/module.sh /etc/profile.d/
 
 ADD soge/jemalloc-3.6.0-1.el7.x86_64.rpm /tmp/jemalloc-3.6.0-1.el7.x86_64.rpm
 
+ADD repos/getho.repo /etc/yum.repos.d/
+
 RUN \
 # Tymczasowa instalacja git-a i ansible w celu uruchomienia playbook-ow
 yum -y install yum-plugin-remove-with-leaves && \
@@ -44,7 +46,7 @@ ansible-playbook Playbooks/install_dep_MatLab.yml --connection=local --extra-var
 ansible-playbook Playbooks/install_boaccess_tools.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
 # Skasowanie tymczasowego srodowiska git i ansible
 yum -y remove ansible --remove-leaves && \
-cd /; rm -rf /boplaybooks
+cd /; rm -rf /boplaybooksi ; 
 
 # Dodanie konfiguracji monit-a
 ADD monit/monitrc /etc/

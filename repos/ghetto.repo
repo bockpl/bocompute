@@ -1,0 +1,6 @@
+[Ghetto]
+name=Ghetto Repository
+baseurl=http://mirror.ghettoforge.org/distributions/gf/el/7/plus/x86_64/
+enabled=1
+gpgcheck=0
+
