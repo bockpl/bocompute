@@ -8,7 +8,7 @@ ADD soge/module.sh /etc/profile.d/
 
 ADD soge/jemalloc-3.6.0-1.el7.x86_64.rpm /tmp/jemalloc-3.6.0-1.el7.x86_64.rpm
 
-ADD repos/getho.repo /etc/yum.repos.d/
+ADD repos/ghetto.repo /etc/yum.repos.d/
 
 RUN \
 # Tymczasowa instalacja git-a i ansible w celu uruchomienia playbook-ow
