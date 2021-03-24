@@ -1,5 +1,5 @@
 FROM centos:7
-LABEL maintainer="seweryn.sitarski@p.lodz.pl"
+LABEL maintainer="pawel.adamczyk.1@p.lodz.pl"
 
 # SGE
 ADD soge/sgeexecd.blueocean-v15 /etc/init.d/
@@ -27,13 +27,13 @@ RUN cd /; git clone https://github.com/bockpl/boplaybooks.git
 #; cd /boplaybooks 
 #&& \
 # Skasowanie tymczasowego srodowiska git, UWAGA: Brak tego wpisu w tej kolejnosci pozbawi srodowiska oprogramowania narzedziowego less, man itp.:
-RUN yum -y remove git epel-release --remove-leaves 
+#RUN yum -y remove git epel-release --remove-leaves 
 
 #&& \
 # Instalacja systemu autoryzacji AD PBIS
 RUN \
 cd boplaybooks ; echo ; pwd ; echo && \
-ansible-playbook Playbooks/install_PBIS.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
+#ansible-playbook Playbooks/install_PBIS.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
 # Instalacja wymagan dla systemu kolejkowego SOGE    
 ansible-playbook Playbooks/install_dep_SOGE.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
 # Instalacja obslugi e-mail
@@ -56,6 +56,8 @@ ansible-playbook Playbooks/install_dep_TensorBoard.yml --connection=local --extr
 ansible-playbook Playbooks/install_dep_MatLab.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
 # Instalacja narzedzi do interaktywnej wpracy w konsoli dla uzytkownikow klastra
 ansible-playbook Playbooks/install_boaccess_tools.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
+# iInstalacja glibc-devel dla gcc
+ansible-playbook Playbooks/install_glibc-dev.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
 # Skasowanie katalogu z playbookami
 rm -rf /boplaybooks && \
 # Skasowanie tymczasowego srodowiska git i ansible
@@ -90,15 +92,15 @@ ADD monit/nslcd.conf /etc/monit.d/
 ADD monit/sync_hosts.conf /etc/monit.d/
 ADD monit/sshd.conf /etc/monit.d/
 ADD monit/sge_exec.conf /etc/monit.d/
-ADD monit/pbis.conf /etc/monit.d/
+#ADD monit/pbis.conf /etc/monit.d/
 #ADD monit/*.conf /etc/monit.d/
 ADD monit/stop_sshd.sh /etc/monit.d/
 ADD monit/stop_nslcd.sh /etc/monit.d/
 ADD monit/start_sshd.sh /etc/monit.d/
 ADD monit/start_nslcd.sh /etc/monit.d/
-ADD monit/stop_pbis.sh /etc/monit.d/
+#ADD monit/stop_pbis.sh /etc/monit.d/
 ADD monit/start_sync_hosts.sh /etc/monit.d/
-ADD monit/start_pbis.sh /etc/monit.d/ 
+#ADD monit/start_pbis.sh /etc/monit.d/ 
 #ADD monit/*.sh /etc/monit.d/
 #RUN mkdir /var/run/nslcd
 RUN chown nslcd -fR /var/run/nslcd
