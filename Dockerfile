@@ -142,7 +142,7 @@ RUN yum -y install ansible
 RUN yum -y install git 
 #&& \
 # Pobranie repozytorium z playbook-ami
-RUN cd /; git clone https://github.com/bockpl/boplaybooks.git
+#RUN cd /; git clone https://github.com/bockpl/boplaybooks.git
 #; cd /boplaybooks 
 #&& \
 # Skasowanie tymczasowego srodowiska git, UWAGA: Brak tego wpisu w tej kolejnosci pozbawi srodowiska oprogramowania narzedziowego less, man itp.:
@@ -175,6 +175,8 @@ ansible-playbook Playbooks/install_dep_TensorBoard.yml --connection=local --extr
 ansible-playbook Playbooks/install_dep_MatLab.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
 # Instalacja narzedzi do interaktywnej wpracy w konsoli dla uzytkownikow klastra
 ansible-playbook Playbooks/install_boaccess_tools.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
+# Instalacja glibc-devel dla gcc
+ansible-playbook Playbooks/install_glibc-dev.yml --connection=local --extra-vars "var_host=127.0.0.1" && \
 # Skasowanie katalogu z playbookami
 rm -rf /boplaybooks && \
 # Skasowanie tymczasowego srodowiska git i ansible
