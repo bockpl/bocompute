@@ -114,6 +114,8 @@ RUN chmod 600 /etc/munge/munge.key
 COPY slurm/slurm.conf /etc/slurm/slurm.conf
 #COPY slurm/slurmdbd.conf /etc/slurm/slurmdbd.conf
 
+RUN echo "reinstalacja poprawionych ansibli"
+
 # Instalacja git-a i ansible m.in. w celu uruchomienia playbook-ow
 RUN yum -y install yum-plugin-remove-with-leaves epel-release
 #&& \
